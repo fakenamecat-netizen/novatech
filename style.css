@@ -1,0 +1,32 @@
+body {
+    font-family: sans-serif;
+    background: #0d1117;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    padding: 40px;
+    text-align: center;
+    color: #fff;
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    background: #161b22;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #58a6ff;
+}
+
+#news div, #crypto div {
+    background: #21262d;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
