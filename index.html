@@ -3,30 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaTech - سایت تکنولوژی هوشمند</title>
+    <title>NovaTech - پلتفرم هوشمند تکنولوژی</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="hero">
-    <h1>NovaTech</h1>
-    <p>هوشمندترین سایت تکنولوژی فارسی</p>
-</header>
+<div class="app">
 
-<section class="news-section">
-    <h2>آخرین اخبار تکنولوژی</h2>
-    <div id="news"></div>
-</section>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>NovaTech</h1>
+            <p>پلتفرم هوشمند تکنولوژی، بازار و هوش مصنوعی</p>
+            <button id="themeToggle">تغییر حالت تاریک / روشن</button>
+        </div>
+    </header>
 
-<section class="crypto-section">
-    <h2>قیمت لحظه‌ای ارزهای دیجیتال</h2>
-    <div id="crypto"></div>
-</section>
+    <nav class="top-nav">
+        <button class="nav-btn" data-target="news">اخبار تکنولوژی</button>
+        <button class="nav-btn" data-target="crypto">بازار ارز دیجیتال</button>
+        <button class="nav-btn" data-target="fx">نرخ ارز و دلار</button>
+        <button class="nav-btn" data-target="ai">تحلیل هوش مصنوعی</button>
+        <button class="nav-btn" data-target="assistant">دستیار هوشمند</button>
+    </nav>
 
-<section class="ai-section">
-    <h2>تحلیل هوش مصنوعی</h2>
-    <p>این بخش به صورت خودکار با داده‌های جدید به‌روزرسانی می‌شود.</p>
-</section>
+    <main>
+        <!-- بخش اخبار -->
+        <section id="news" class="panel active">
+            <h2>آخرین اخبار تکنولوژی</h2>
+            <div class="toolbar">
+                <input type="text" id="newsSearch" placeholder="جست‌وجو در اخبار...">
+                <span class="status" id="newsStatus"></span>
+            </div>
+            <div id="newsList" class="cards"></div>
+        </section>
+
+        <!-- بخش کریپتو -->
+        <section id="crypto" class="panel">
+            <h2>بازار ارزهای دیجیتال</h2>
+            <div class="toolbar">
+                <input type="text" id="cryptoSearch" placeholder="جست‌وجو در ارزها...">
+                <span class="status" id="cryptoStatus"></span>
+            </div>
+            <div id="cryptoList" class="cards"></div>
+        </section>
+
+        <!-- بخش نرخ ارز -->
+        <section id="fx" class="panel">
+            <h2>نرخ ارز و دلار</h2>
+            <div class="toolbar">
+                <span class="status" id="fxStatus"></span>
+            </div>
+            <div id="fxList" class="cards"></div>
+        </section>
+
+        <!-- بخش هوش مصنوعی -->
+        <section id="ai" class="panel">
+            <h2>تحلیل خودکار هوش مصنوعی</h2>
+            <p class="ai-text">
+                این بخش بر اساس وضعیت بازار کریپتو و اخبار، یک تحلیل خلاصه تولید می‌کند
+                تا کاربر دید کلی از وضعیت تکنولوژی و بازار داشته باشد.
+            </p>
+            <div id="aiAnalysis" class="ai-box"></div>
+        </section>
+
+        <!-- دستیار هوشمند داخلی (بدون اتصال بیرونی) -->
+        <section id="assistant" class="panel">
+            <h2>دستیار هوشمند NovaTech</h2>
+            <p class="assistant-text">
+                یک سؤال دربارهٔ تکنولوژی، کریپتو یا هوش مصنوعی بنویس؛
+                دستیار داخلی بر اساس داده‌های صفحه، پاسخ تحلیلی می‌دهد.
+            </p>
+            <textarea id="assistantInput" placeholder="سؤال خود را اینجا بنویسید..."></textarea>
+            <button id="assistantAsk">دریافت پاسخ</button>
+            <div id="assistantAnswer" class="ai-box"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span>NovaTech © پلتفرم هوشمند تکنولوژی</span>
+        <span>نسخهٔ ترکیبی: آنلاین + آفلاین</span>
+    </footer>
+
+</div>
 
 <script src="script.js"></script>
 </body>
