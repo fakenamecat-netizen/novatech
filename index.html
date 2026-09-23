@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaTech - پلتفرم هوشمند تکنولوژی</title>
+    <title>NovaTech - جهان هوشمند تکنولوژی فارسی</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,9 +12,12 @@
 
     <header class="hero">
         <div class="hero-inner">
-            <div>
+            <div class="hero-text">
                 <h1>NovaTech</h1>
-                <p>پلتفرم هوشمند و فارسی برای تکنولوژی، بازار و تحلیل</p>
+                <p>
+                    جهان هوشمند تکنولوژی، بازار و تحلیل برای کاربران فارسی‌زبان؛
+                    یک نقطهٔ مرکزی برای خبر، دانش، بازار و گفت‌وگو.
+                </p>
             </div>
             <button id="themeToggle">تغییر حالت تاریک / روشن</button>
         </div>
@@ -22,12 +25,12 @@
 
     <nav class="top-nav">
         <button class="nav-btn" data-target="dashboard">داشبورد</button>
-        <button class="nav-btn" data-target="news">اخبار تکنولوژی</button>
-        <button class="nav-btn" data-target="crypto">بازار ارز دیجیتال</button>
-        <button class="nav-btn" data-target="stocks">بازار سهام (نمونه)</button>
-        <button class="nav-btn" data-target="fx">نرخ ارز</button>
+        <button class="nav-btn" data-target="news">اخبار و تحلیل‌ها</button>
+        <button class="nav-btn" data-target="market">بازار (کریپتو، سهام، ارز)</button>
+        <button class="nav-btn" data-target="tools">ابزارهای کاربردی</button>
         <button class="nav-btn" data-target="ai">تحلیل هوش مصنوعی</button>
         <button class="nav-btn" data-target="assistant">دستیار هوشمند</button>
+        <button class="nav-btn" data-target="community">انجمن و تعامل کاربران</button>
         <button class="nav-btn" data-target="about">دربارهٔ NovaTech</button>
     </nav>
 
@@ -37,65 +40,64 @@
         <section id="dashboard" class="panel active">
             <h2>داشبورد کلی NovaTech</h2>
             <p class="panel-desc">
-                این صفحه نمای کلی از وضعیت تکنولوژی، بازار کریپتو، سهام و ارز را بر اساس داده‌های نمونه نشان می‌دهد.
-                همهٔ بخش‌ها قابل کلیک و تعامل هستند.
+                این صفحه، نمای کلی از وضعیت تکنولوژی، بازار و محتوای سایت را به‌صورت خلاصه و قابل‌فهم ارائه می‌کند؛
+                مناسب برای کاربر عادی و نقطهٔ شروع برای کاربر حرفه‌ای.
             </p>
-            <div class="cards dashboard-grid" id="dashboardGrid"></div>
+            <div class="cards" id="dashboardGrid"></div>
         </section>
 
         <!-- اخبار -->
         <section id="news" class="panel">
-            <h2>آخرین اخبار تکنولوژی (نمونه)</h2>
+            <h2>اخبار و تحلیل‌های تکنولوژی</h2>
             <p class="panel-desc">
-                این بخش فعلاً با داده‌های نمونه کار می‌کند تا ساختار سایت پایدار باشد.
-                بعداً می‌توان آن را به منبع خبری زنده متصل کرد.
+                مجموعه‌ای از خبرها و تحلیل‌های نمونه دربارهٔ هوش مصنوعی، زیرساخت، امنیت و بازار تکنولوژی؛
+                ساختار این بخش برای اتصال به منبع خبری زنده در آینده آماده است.
             </p>
             <div class="toolbar">
-                <input type="text" id="newsSearch" placeholder="جست‌وجو در اخبار...">
+                <input type="text" id="newsSearch" placeholder="جست‌وجو در اخبار و تحلیل‌ها...">
                 <span class="status" id="newsStatus"></span>
             </div>
             <div class="cards" id="newsList"></div>
         </section>
 
-        <!-- کریپتو -->
-        <section id="crypto" class="panel">
-            <h2>بازار ارزهای دیجیتال (نمونه)</h2>
+        <!-- بازار -->
+        <section id="market" class="panel">
+            <h2>بازار کریپتو، سهام و ارز (نمونهٔ تحلیلی)</h2>
             <p class="panel-desc">
-                چند ارز اصلی با قیمت و تغییر ۲۴ ساعتهٔ نمونه نمایش داده می‌شوند.
-                ساختار آمادهٔ اتصال به منبع زنده است.
+                این بخش، تصویر کلی از بازار کریپتو، سهام و ارز را بر اساس داده‌های نمونه نشان می‌دهد؛
+                برای تمرین تحلیل و درک ساختار، نه تصمیم‌گیری مالی واقعی.
             </p>
+
+            <h3 class="sub-title">بازار ارزهای دیجیتال</h3>
             <div class="toolbar">
-                <input type="text" id="cryptoSearch" placeholder="جست‌وجو در ارزها...">
+                <input type="text" id="cryptoSearch" placeholder="جست‌وجو در ارزهای دیجیتال...">
                 <span class="status" id="cryptoStatus"></span>
             </div>
             <div class="cards" id="cryptoList"></div>
-        </section>
 
-        <!-- سهام -->
-        <section id="stocks" class="panel">
-            <h2>بازار سهام (نمونه)</h2>
-            <p class="panel-desc">
-                چند نماد معروف جهانی به‌صورت نمونه نمایش داده می‌شوند.
-                این بخش برای توسعهٔ آینده آماده است.
-            </p>
+            <h3 class="sub-title">بازار سهام جهانی (نمونه)</h3>
             <div class="cards" id="stocksList"></div>
+
+            <h3 class="sub-title">نرخ ارزهای مهم (نمونه)</h3>
+            <div class="cards" id="fxList"></div>
         </section>
 
-        <!-- ارز -->
-        <section id="fx" class="panel">
-            <h2>نرخ ارز (نمونه)</h2>
+        <!-- ابزارها -->
+        <section id="tools" class="panel">
+            <h2>ابزارهای کاربردی NovaTech</h2>
             <p class="panel-desc">
-                نرخ‌های تقریبی چند جفت‌ارز مهم به‌صورت نمونه نمایش داده می‌شوند.
+                مجموعه‌ای از ابزارهای ساده و قابل‌گسترش برای کاربر عادی و حرفه‌ای؛
+                در نسخهٔ پایه، چند ابزار مفهومی نمایش داده می‌شود تا ساختار آمادهٔ توسعه باشد.
             </p>
-            <div class="cards" id="fxList"></div>
+            <div class="cards" id="toolsList"></div>
         </section>
 
         <!-- تحلیل هوش مصنوعی -->
         <section id="ai" class="panel">
             <h2>تحلیل داخلی هوش مصنوعی NovaTech</h2>
             <p class="panel-desc">
-                این تحلیل بر اساس داده‌های نمونهٔ کریپتو و سهام، یک تصویر کلی از وضعیت بازار ارائه می‌دهد.
-                هدف، کمک به درک روندهاست، نه توصیهٔ مالی.
+                این بخش، بر اساس داده‌های نمونهٔ بازار و اخبار، یک تحلیل کلی از وضعیت امروز ارائه می‌کند؛
+                هدف، کمک به درک روندهاست، نه توصیهٔ مالی یا تصمیم‌گیری قطعی.
             </p>
             <div class="ai-box" id="aiAnalysis"></div>
         </section>
@@ -104,34 +106,52 @@
         <section id="assistant" class="panel">
             <h2>دستیار هوشمند داخلی</h2>
             <p class="panel-desc">
-                یک سؤال دربارهٔ تکنولوژی، کریپتو، سهام یا ارز بنویس؛
-                دستیار داخلی بر اساس داده‌های صفحه، پاسخ تحلیلی ساده می‌دهد.
+                یک سؤال دربارهٔ تکنولوژی، بازار یا روندها بنویس؛
+                دستیار داخلی بر اساس داده‌های موجود در همین پلتفرم، پاسخ تحلیلی ساده ارائه می‌دهد.
             </p>
             <textarea id="assistantInput" placeholder="سؤال خود را اینجا بنویسید..."></textarea>
             <button id="assistantAsk">دریافت پاسخ</button>
             <div class="ai-box" id="assistantAnswer"></div>
         </section>
 
+        <!-- انجمن و تعامل کاربران (ساختار آماده برای اتصال) -->
+        <section id="community" class="panel">
+            <h2>انجمن و تعامل کاربران NovaTech</h2>
+            <p class="panel-desc">
+                این بخش به‌عنوان درگاه انجمن و گفت‌وگوی کاربران طراحی شده است؛
+                در نسخهٔ پایه، توضیح و ساختار آماده است تا در آینده به یک انجمن واقعی (مثلاً Discourse یا انجمن وردپرسی) متصل شود.
+            </p>
+            <div class="ai-box">
+                در نسخهٔ عملی، این بخش می‌تواند شامل:
+                <br>
+                - فهرست موضوع‌های انجمن<br>
+                - آخرین بحث‌ها و پاسخ‌ها<br>
+                - لینک مستقیم به انجمن مستقل متصل به NovaTech<br>
+                - بخش پرسش و پاسخ تخصصی<br>
+                در حال حاضر، این بخش به‌عنوان جایگاه ثابت انجمن در معماری سایت ثبت شده است.
+            </div>
+        </section>
+
         <!-- درباره -->
         <section id="about" class="panel">
             <h2>دربارهٔ NovaTech</h2>
             <p class="panel-desc">
-                NovaTech یک پلتفرم آزمایشی و کاملاً فارسی است که برای نمایش ساختار یک سایت هوشمند،
-                قابل تعامل و قابل توسعه طراحی شده است؛ بدون نیاز به سرور و به‌صورت رایگان روی GitHub Pages.
+                NovaTech یک هستهٔ فارسی و ایرانی برای جهان تکنولوژی، بازار و تحلیل است؛
+                هدف، ساخت یک نقطهٔ مرکزی برای خبر، دانش، ابزار و گفت‌وگو، بدون نیاز به مراجعهٔ مداوم به سایت‌های دیگر است.
             </p>
             <ul class="about-list">
-                <li>طراحی واکنش‌گرا و سازگار با موبایل، تبلت و دسکتاپ</li>
-                <li>ساختار ماژولار برای اضافه‌کردن بخش‌های جدید بدون تخریب کد</li>
-                <li>امکان اتصال به APIهای زنده در آینده (با اضافه‌کردن سرور یا تنظیمات پیشرفته)</li>
-                <li>کاملاً قابل شخصی‌سازی برای برند و هویت بصری اختصاصی</li>
+                <li>طراحی کاملاً فارسی، راست‌چین و مطابق قواعد نگارشی امروز.</li>
+                <li>ساختار ماژولار برای توسعهٔ آینده (انجمن، شبکهٔ اجتماعی، سیستم کاربری، تبلیغات).</li>
+                <li>مناسب برای کاربر عادی و حرفه‌ای؛ ساده در ظاهر، عمیق در ساختار.</li>
+                <li>قابل‌استفاده روی سرویس‌های رایگان میزبانی استاتیک (GitHub Pages، Netlify، Vercel) و قابل‌انتقال به سیستم‌های پویا مثل وردپرس.</li>
             </ul>
         </section>
 
     </main>
 
     <footer class="footer">
-        <span>NovaTech © پلتفرم هوشمند تکنولوژی (نسخهٔ نمونه و قابل توسعه)</span>
-        <span>ساخته شده برای کاربر: Fake</span>
+        <span>NovaTech © جهان هوشمند تکنولوژی فارسی</span>
+        <span>نسخهٔ پایهٔ قابل‌گسترش برای کاربر: Fake</span>
     </footer>
 
 </div>
