@@ -1,264 +1,240 @@
-:root {
-    --bg-dark: #0d1117;
-    --bg-light: #f5f5f5;
-    --card-dark: #161b22;
-    --card-light: #ffffff;
-    --accent: #00c6ff;
-    --accent2: #ff6b6b;
-    --text-dark: #ffffff;
-    --text-light: #111827;
+// دادهٔ نمونهٔ آفلاین برای مواقعی که API کار نکند
+const sampleNews = [
+    { title: "رشد چشمگیر هوش مصنوعی در صنعت سلامت", source: "NovaTech", time: "امروز" },
+    { title: "سرمایه‌گذاری سنگین روی پردازنده‌های مخصوص AI", source: "NovaTech", time: "امروز" },
+    { title: "رقابت شدید بین غول‌های تکنولوژی در حوزهٔ کلود", source: "NovaTech", time: "دیروز" },
+];
+
+const sampleCrypto = [
+    { name: "Bitcoin", symbol: "BTC", price: 65000, change24h: 2.5 },
+    { name: "Ethereum", symbol: "ETH", price: 3200, change24h: -1.2 },
+    { name: "Solana", symbol: "SOL", price: 150, change24h: 4.1 },
+];
+
+const sampleFx = [
+    { pair: "EUR/USD", rate: 1.08 },
+    { pair: "USD/JPY", rate: 155.2 },
+    { pair: "GBP/USD", rate: 1.26 },
+];
+
+// انتخاب پنل‌ها
+const panels = document.querySelectorAll(".panel");
+const navButtons = document.querySelectorAll(".nav-btn");
+
+navButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const target = btn.dataset.target;
+        panels.forEach(p => p.classList.toggle("active", p.id === target));
+    });
+});
+
+// حالت تاریک / روشن
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+});
+
+// نمایش اخبار (آنلاین + آفلاین)
+const newsList = document.getElementById("newsList");
+const newsStatus = document.getElementById("newsStatus");
+const newsSearch = document.getElementById("newsSearch");
+
+let currentNews = [];
+
+function renderNews(list) {
+    newsList.innerHTML = "";
+    list.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="card-title">${item.title}</div>
+            <div class="card-meta">${item.source || "منبع ناشناس"} • ${item.time || ""}</div>
+            <span class="card-tag">تکنولوژی</span>
+        `;
+        newsList.appendChild(card);
+    });
 }
 
-body {
-    margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "IRANSans", sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-dark);
-    direction: rtl;
+function loadNews() {
+    newsStatus.textContent = "در حال دریافت اخبار زنده...";
+    // نمونهٔ یک API عمومی اخبار تکنولوژی (در صورت عدم پاسخ، آفلاین می‌شود)
+    fetch("https://api.codetabs.com/v1/proxy?quest=https://technewsapi.vercel.app/api/news")
+        .then(res => res.json())
+        .then(data => {
+            currentNews = data.slice(0, 10).map(n => ({
+                title: n.title,
+                source: n.source || "TechNews",
+                time: "لحظاتی پیش"
+            }));
+            renderNews(currentNews);
+            newsStatus.textContent = "اخبار زنده فعال است.";
+        })
+        .catch(() => {
+            currentNews = sampleNews;
+            renderNews(currentNews);
+            newsStatus.textContent = "اتصال به منبع اخبار ممکن نشد؛ نمایش دادهٔ نمونه.";
+        });
 }
 
-body.light {
-    background: var(--bg-light);
-    color: var(--text-light);
+newsSearch.addEventListener("input", () => {
+    const q = newsSearch.value.trim().toLowerCase();
+    const filtered = currentNews.filter(n => n.title.toLowerCase().includes(q));
+    renderNews(filtered);
+});
+
+// نمایش کریپتو (آنلاین + آفلاین)
+const cryptoList = document.getElementById("cryptoList");
+const cryptoStatus = document.getElementById("cryptoStatus");
+const cryptoSearch = document.getElementById("cryptoSearch");
+
+let currentCrypto = [];
+
+function renderCrypto(list) {
+    cryptoList.innerHTML = "";
+    list.forEach(c => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const changeColor = c.change24h >= 0 ? "var(--accent)" : "var(--accent2)";
+        card.innerHTML = `
+            <div class="card-title">${c.name} (${c.symbol})</div>
+            <div class="card-meta">قیمت تقریبی: ${c.price.toLocaleString()} دلار</div>
+            <div class="card-meta" style="color:${changeColor}">تغییر ۲۴ ساعته: ${c.change24h.toFixed(2)}٪</div>
+            <span class="card-tag">کریپتو</span>
+        `;
+        cryptoList.appendChild(card);
+    });
 }
 
-.app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+function loadCrypto() {
+    cryptoStatus.textContent = "در حال دریافت بازار کریپتو...";
+    // نمونهٔ API عمومی کریپتو با CORS آزاد 
+    fetch("https://api.coincap.io/v2/assets?limit=10")
+        .then(res => res.json())
+        .then(data => {
+            currentCrypto = data.data.map(c => ({
+                name: c.name,
+                symbol: c.symbol,
+                price: parseFloat(c.priceUsd),
+                change24h: parseFloat(c.changePercent24Hr)
+            }));
+            renderCrypto(currentCrypto);
+            cryptoStatus.textContent = "دادهٔ زندهٔ کریپتو فعال است.";
+        })
+        .catch(() => {
+            currentCrypto = sampleCrypto;
+            renderCrypto(currentCrypto);
+            cryptoStatus.textContent = "اتصال به بازار کریپتو ممکن نشد؛ نمایش دادهٔ نمونه.";
+        });
 }
 
-/* هدر */
+cryptoSearch.addEventListener("input", () => {
+    const q = cryptoSearch.value.trim().toLowerCase();
+    const filtered = currentCrypto.filter(c =>
+        c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q)
+    );
+    renderCrypto(filtered);
+});
 
-.hero {
-    background: radial-gradient(circle at top left, #00c6ff, #0072ff 40%, #0d1117 80%);
-    padding: 32px 16px;
-    color: #fff;
+// نمایش نرخ ارز (آنلاین + آفلاین)
+const fxList = document.getElementById("fxList");
+const fxStatus = document.getElementById("fxStatus");
+
+let currentFx = [];
+
+function renderFx(list) {
+    fxList.innerHTML = "";
+    list.forEach(f => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="card-title">${f.pair}</div>
+            <div class="card-meta">نرخ تقریبی: ${f.rate}</div>
+            <span class="card-tag">ارز</span>
+        `;
+        fxList.appendChild(card);
+    });
 }
 
-.hero-content {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+function loadFx() {
+    fxStatus.textContent = "در حال دریافت نرخ ارز...";
+    // نمونهٔ API عمومی نرخ ارز با CORS آزاد (مانند Frankfurter) 
+    fetch("https://api.frankfurter.app/latest?from=USD&to=EUR,JPY,GBP")
+        .then(res => res.json())
+        .then(data => {
+            currentFx = Object.entries(data.rates).map(([code, rate]) => ({
+                pair: `USD/${code}`,
+                rate: rate
+            }));
+            renderFx(currentFx);
+            fxStatus.textContent = "نرخ ارز زنده فعال است.";
+        })
+        .catch(() => {
+            currentFx = sampleFx;
+            renderFx(currentFx);
+            fxStatus.textContent = "اتصال به منبع نرخ ارز ممکن نشد؛ نمایش دادهٔ نمونه.";
+        });
 }
 
-.hero h1 {
-    font-size: 2.4rem;
-    margin: 0;
-}
+// تحلیل سادهٔ هوش مصنوعی داخلی بر اساس داده‌ها
+const aiAnalysisBox = document.getElementById("aiAnalysis");
 
-.hero p {
-    margin: 0;
-    opacity: 0.9;
-}
-
-#themeToggle {
-    align-self: flex-start;
-    margin-top: 12px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: none;
-    background: #fff;
-    color: #0072ff;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* ناوبری بالا */
-
-.top-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 16px;
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-.nav-btn {
-    flex: 1 1 120px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid #30363d;
-    background: #161b22;
-    color: #fff;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-body.light .nav-btn {
-    background: #ffffff;
-    border-color: #e5e7eb;
-    color: #111827;
-}
-
-.nav-btn:hover {
-    border-color: var(--accent);
-}
-
-/* پنل‌ها */
-
-main {
-    flex: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 8px 16px 24px;
-}
-
-.panel {
-    display: none;
-    margin-top: 16px;
-}
-
-.panel.active {
-    display: block;
-}
-
-.panel h2 {
-    margin: 0 0 8px;
-    color: var(--accent);
-}
-
-.toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.toolbar input[type="text"] {
-    flex: 1;
-    padding: 8px 10px;
-    border-radius: 999px;
-    border: 1px solid #30363d;
-    background: #0d1117;
-    color: #fff;
-}
-
-body.light .toolbar input[type="text"] {
-    background: #ffffff;
-    border-color: #d1d5db;
-    color: #111827;
-}
-
-.status {
-    font-size: 0.8rem;
-    opacity: 0.8;
-}
-
-/* کارت‌ها */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 12px;
-}
-
-.card {
-    background: var(--card-dark);
-    border-radius: 12px;
-    padding: 12px;
-    border: 1px solid #30363d;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-body.light .card {
-    background: var(--card-light);
-    border-color: #e5e7eb;
-}
-
-.card-title {
-    font-weight: 600;
-}
-
-.card-meta {
-    font-size: 0.8rem;
-    opacity: 0.8;
-}
-
-.card-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    background: rgba(0, 198, 255, 0.12);
-    color: var(--accent);
-}
-
-/* هوش مصنوعی و دستیار */
-
-.ai-box {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    background: #161b22;
-    border: 1px solid #30363d;
-    min-height: 60px;
-}
-
-body.light .ai-box {
-    background: #ffffff;
-    border-color: #e5e7eb;
-}
-
-.ai-text, .assistant-text {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-#assistantInput {
-    width: 100%;
-    min-height: 80px;
-    margin-top: 8px;
-    padding: 8px;
-    border-radius: 12px;
-    border: 1px solid #30363d;
-    background: #0d1117;
-    color: #fff;
-}
-
-body.light #assistantInput {
-    background: #ffffff;
-    border-color: #d1d5db;
-    color: #111827;
-}
-
-#assistantAsk {
-    margin-top: 8px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: none;
-    background: var(--accent);
-    color: #0d1117;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-/* فوتر */
-
-.footer {
-    padding: 12px 16px;
-    font-size: 0.8rem;
-    opacity: 0.8;
-    display: flex;
-    justify-content: space-between;
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-/* واکنش‌گرا */
-
-@media (max-width: 640px) {
-    .hero-content {
-        align-items: flex-start;
+function generateAIAnalysis() {
+    if (!currentCrypto.length) {
+        aiAnalysisBox.textContent =
+            "در حال حاضر دادهٔ بازار کریپتو در دسترس نیست؛ اما می‌توانید از بخش اخبار برای دید کلی استفاده کنید.";
+        return;
     }
-    .footer {
-        flex-direction: column;
-        gap: 4px;
-    }
+
+    const avgChange = currentCrypto.reduce((sum, c) => sum + c.change24h, 0) / currentCrypto.length;
+    let mood;
+    if (avgChange > 2) mood = "بازار کریپتو امروز به‌طور کلی صعودی است و تمایل سرمایه‌گذاران مثبت به‌نظر می‌رسد.";
+    else if (avgChange > 0) mood = "بازار کریپتو کمی مثبت است؛ نوسان‌ها محدود اما رو به بالا هستند.";
+    else if (avgChange > -2) mood = "بازار در وضعیت خنثی تا کمی منفی است؛ احتیاط در تصمیم‌گیری منطقی است.";
+    else mood = "بازار کریپتو امروز فشار فروش قابل‌توجهی دارد و ریسک نوسان بالا است.";
+
+    aiAnalysisBox.textContent =
+        "بر اساس میانگین تغییرات ۲۴ ساعتهٔ ارزهای اصلی، " +
+        mood +
+        " برای درک بهتر فضا، ترکیب اخبار تکنولوژی و وضعیت کریپتو می‌تواند تصویر کامل‌تری از روندهای جهانی ارائه دهد.";
 }
+
+// دستیار هوشمند داخلی (بدون اتصال بیرونی)
+const assistantInput = document.getElementById("assistantInput");
+const assistantAsk = document.getElementById("assistantAsk");
+const assistantAnswer = document.getElementById("assistantAnswer");
+
+assistantAsk.addEventListener("click", () => {
+    const q = assistantInput.value.trim();
+    if (!q) {
+        assistantAnswer.textContent = "لطفاً ابتدا یک سؤال بنویسید.";
+        return;
+    }
+
+    // پاسخ ساده بر اساس نوع سؤال (کاملاً داخلی، بدون ارتباط بیرونی)
+    let reply = "سؤال شما دربارهٔ «" + q + "» ثبت شد. ";
+
+    if (/کریپتو|بیت کوین|اتریوم|ارز دیجیتال/i.test(q)) {
+        reply += "برای تحلیل بازار کریپتو، به بخش «بازار ارزهای دیجیتال» در بالا نگاه کنید؛ " +
+            "در آن‌جا می‌توانید قیمت‌ها، تغییرات ۲۴ ساعته و وضعیت کلی بازار را ببینید. " +
+            "همچنین تحلیل خودکار هوش مصنوعی در بخش «تحلیل هوش مصنوعی» بر اساس همین داده‌ها تولید می‌شود.";
+    } else if (/دلار|ارز|نرخ/i.test(q)) {
+        reply += "نرخ‌های تقریبی ارز در بخش «نرخ ارز و دلار» نمایش داده می‌شوند. " +
+            "این داده‌ها برای دید کلی مناسب‌اند، اما برای تصمیم‌های مالی جدی باید از منابع رسمی استفاده کنید.";
+    } else if (/هوش مصنوعی|AI|مدل/i.test(q)) {
+        reply += "هوش مصنوعی در این سایت برای تحلیل وضعیت بازار و پاسخ‌گویی ساده به سؤالات استفاده می‌شود. " +
+            "این تحلیل‌ها کمکی هستند و جایگزین مشاورهٔ تخصصی یا تحقیق عمیق نمی‌شوند.";
+    } else {
+        reply += "برای این موضوع، می‌توانید از ترکیب بخش «اخبار تکنولوژی» و «تحلیل هوش مصنوعی» استفاده کنید " +
+            "تا دید کلی از روندها و تأثیر آن بر بازار و فناوری داشته باشید.";
+    }
+
+    assistantAnswer.textContent = reply;
+});
+
+// راه‌اندازی اولیه
+loadNews();
+loadCrypto();
+loadFx();
+
+// کمی تأخیر برای تولید تحلیل پس از دریافت کریپتو
+setTimeout(generateAIAnalysis, 3000);
