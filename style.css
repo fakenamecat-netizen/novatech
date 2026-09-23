@@ -1,12 +1,19 @@
 :root {
-    --bg-dark: #0d1117;
-    --bg-light: #f5f5f5;
-    --card-dark: #161b22;
+    --bg-dark: #0b1120;
+    --bg-light: #f9fafb;
+    --card-dark: #111827;
     --card-light: #ffffff;
-    --accent: #00c6ff;
-    --accent2: #ff6b6b;
-    --text-dark: #ffffff;
+    --border-dark: #1f2937;
+    --border-light: #e5e7eb;
+    --accent: #3b82f6;
+    --accent-soft: rgba(59, 130, 246, 0.12);
+    --accent2: #ef4444;
+    --text-dark: #f9fafb;
     --text-light: #111827;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -31,78 +38,79 @@ body.light {
 /* هدر */
 
 .hero {
-    background: radial-gradient(circle at top left, #00c6ff, #0072ff 40%, #0d1117 80%);
-    padding: 32px 16px;
+    background: radial-gradient(circle at top left, #3b82f6, #1d4ed8 40%, #0b1120 80%);
+    padding: 24px 16px;
     color: #fff;
 }
 
-.hero-content {
-    max-width: 960px;
+.hero-inner {
+    max-width: 1040px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     gap: 12px;
 }
 
 .hero h1 {
-    font-size: 2.4rem;
     margin: 0;
+    font-size: 2.2rem;
 }
 
 .hero p {
-    margin: 0;
+    margin: 4px 0 0;
     opacity: 0.9;
 }
 
 #themeToggle {
-    align-self: flex-start;
-    margin-top: 12px;
     padding: 8px 16px;
     border-radius: 999px;
     border: none;
-    background: #fff;
-    color: #0072ff;
+    background: #ffffff;
+    color: #1d4ed8;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.9rem;
 }
 
-/* ناوبری بالا */
+/* ناوبری */
 
 .top-nav {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 12px 16px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 12px 16px;
-    max-width: 960px;
-    margin: 0 auto;
 }
 
 .nav-btn {
     flex: 1 1 120px;
     padding: 8px 12px;
     border-radius: 999px;
-    border: 1px solid #30363d;
-    background: #161b22;
-    color: #fff;
+    border: 1px solid var(--border-dark);
+    background: #020617;
+    color: #e5e7eb;
     cursor: pointer;
-    font-size: 0.9rem;
-}
-
-body.light .nav-btn {
-    background: #ffffff;
-    border-color: #e5e7eb;
-    color: #111827;
+    font-size: 0.85rem;
+    text-align: center;
 }
 
 .nav-btn:hover {
     border-color: var(--accent);
 }
 
-/* پنل‌ها */
+body.light .nav-btn {
+    background: #ffffff;
+    border-color: var(--border-light);
+    color: #111827;
+}
+
+/* بدنه اصلی */
 
 main {
     flex: 1;
-    max-width: 960px;
+    max-width: 1040px;
     margin: 0 auto;
     padding: 8px 16px 24px;
 }
@@ -119,7 +127,16 @@ main {
 .panel h2 {
     margin: 0 0 8px;
     color: var(--accent);
+    font-size: 1.3rem;
 }
+
+.panel-desc {
+    margin: 0 0 12px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* ابزارک‌ها */
 
 .toolbar {
     display: flex;
@@ -133,14 +150,15 @@ main {
     flex: 1;
     padding: 8px 10px;
     border-radius: 999px;
-    border: 1px solid #30363d;
-    background: #0d1117;
-    color: #fff;
+    border: 1px solid var(--border-dark);
+    background: #020617;
+    color: #e5e7eb;
+    font-size: 0.9rem;
 }
 
 body.light .toolbar input[type="text"] {
     background: #ffffff;
-    border-color: #d1d5db;
+    border-color: var(--border-light);
     color: #111827;
 }
 
@@ -161,7 +179,7 @@ body.light .toolbar input[type="text"] {
     background: var(--card-dark);
     border-radius: 12px;
     padding: 12px;
-    border: 1px solid #30363d;
+    border: 1px solid var(--border-dark);
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -169,16 +187,17 @@ body.light .toolbar input[type="text"] {
 
 body.light .card {
     background: var(--card-light);
-    border-color: #e5e7eb;
+    border-color: var(--border-light);
 }
 
 .card-title {
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
 .card-meta {
     font-size: 0.8rem;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .card-tag {
@@ -186,8 +205,14 @@ body.light .card {
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 0.75rem;
-    background: rgba(0, 198, 255, 0.12);
+    background: var(--accent-soft);
     color: var(--accent);
+}
+
+/* داشبورد */
+
+.dashboard-grid .card {
+    min-height: 120px;
 }
 
 /* هوش مصنوعی و دستیار */
@@ -196,35 +221,32 @@ body.light .card {
     margin-top: 12px;
     padding: 12px;
     border-radius: 12px;
-    background: #161b22;
-    border: 1px solid #30363d;
-    min-height: 60px;
+    background: var(--card-dark);
+    border: 1px solid var(--border-dark);
+    min-height: 80px;
+    font-size: 0.9rem;
 }
 
 body.light .ai-box {
-    background: #ffffff;
-    border-color: #e5e7eb;
-}
-
-.ai-text, .assistant-text {
-    font-size: 0.9rem;
-    opacity: 0.9;
+    background: var(--card-light);
+    border-color: var(--border-light);
 }
 
 #assistantInput {
     width: 100%;
-    min-height: 80px;
+    min-height: 90px;
     margin-top: 8px;
     padding: 8px;
     border-radius: 12px;
-    border: 1px solid #30363d;
-    background: #0d1117;
-    color: #fff;
+    border: 1px solid var(--border-dark);
+    background: #020617;
+    color: #e5e7eb;
+    font-size: 0.9rem;
 }
 
 body.light #assistantInput {
     background: #ffffff;
-    border-color: #d1d5db;
+    border-color: var(--border-light);
     color: #111827;
 }
 
@@ -234,31 +256,45 @@ body.light #assistantInput {
     border-radius: 999px;
     border: none;
     background: var(--accent);
-    color: #0d1117;
+    color: #f9fafb;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* درباره */
+
+.about-list {
+    margin: 8px 0 0;
+    padding-right: 18px;
+    font-size: 0.9rem;
+}
+
+.about-list li {
+    margin-bottom: 4px;
 }
 
 /* فوتر */
 
 .footer {
+    max-width: 1040px;
+    margin: 0 auto;
     padding: 12px 16px;
     font-size: 0.8rem;
     opacity: 0.8;
     display: flex;
     justify-content: space-between;
-    max-width: 960px;
-    margin: 0 auto;
+    gap: 8px;
 }
 
 /* واکنش‌گرا */
 
 @media (max-width: 640px) {
-    .hero-content {
+    .hero-inner {
+        flex-direction: column;
         align-items: flex-start;
     }
     .footer {
         flex-direction: column;
-        gap: 4px;
     }
 }
