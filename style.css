@@ -52,13 +52,14 @@ body.light {
     gap: 12px;
 }
 
-.hero h1 {
+.hero-text h1 {
     margin: 0;
     font-size: 2.2rem;
 }
 
-.hero p {
-    margin: 4px 0 0;
+.hero-text p {
+    margin: 6px 0 0;
+    font-size: 0.95rem;
     opacity: 0.9;
 }
 
@@ -85,7 +86,7 @@ body.light {
 }
 
 .nav-btn {
-    flex: 1 1 120px;
+    flex: 1 1 140px;
     padding: 8px 12px;
     border-radius: 999px;
     border: 1px solid var(--border-dark);
@@ -134,6 +135,12 @@ main {
     margin: 0 0 12px;
     font-size: 0.9rem;
     opacity: 0.9;
+}
+
+.sub-title {
+    margin: 16px 0 8px;
+    font-size: 1rem;
+    color: var(--accent);
 }
 
 /* ابزارک‌ها */
@@ -211,7 +218,7 @@ body.light .card {
 
 /* داشبورد */
 
-.dashboard-grid .card {
+#dashboardGrid .card {
     min-height: 120px;
 }
 
